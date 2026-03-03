@@ -7,7 +7,7 @@ This project includes a flexible seeding system that allows you to populate your
 ## Directory Structure
 
 ```text
-seeders/
+scripts/seeders/
 ├── mongo/          # MongoDB seeder files
 ├── mysql/          # MySQL seeder files
 ├── pg/             # PostgreSQL seeder files
@@ -20,17 +20,16 @@ seeders/
 
 ## Available Commands
 
-The Seeder CLI allows you to run all seeders, target specific databases, or run individual seeder files.
+The Seeder CLI allows you to run all seeders, target specific databases, or run individual seeder files with environment-specific configurations.
 
-| Action | Command |
-| :--- | :--- |
-| **Seed All** | `bun run seed` |
-| **Seed MySQL** | `bun run seed mysql` |
-| **Seed MongoDB** | `bun run seed mongo` |
-| **Seed PostgreSQL** | `bun run seed pg` |
-| **Seed SQLite** | `bun run seed sqlite` |
-| **Run Specific File** | `bun run seed <target> <file_name>` |
-| **Create New Seeder** | `bun run make seeder <target> <name>` |
+| Action | Dev Command (`.env.dev`) | Prod Command (`.env.prod`) |
+| :--- | :--- | :--- |
+| **Seed All** | `bun run seed:dev` | `bun run seed:prod` |
+| **Seed MySQL** | `bun run seed:dev:mysql` | `bun run seed:prod mysql` |
+| **Seed MongoDB** | `bun run seed:dev:mongo` | `bun run seed:prod mongo` |
+| **Seed PostgreSQL** | `bun run seed:dev:pg` | `bun run seed:prod pg` |
+| **Seed SQLite** | `bun run seed:dev:sqlite` | `bun run seed:prod sqlite` |
+| **Create New** | `bun run make seeder <target> <name>` | N/A |
 
 ---
 

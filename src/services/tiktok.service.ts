@@ -4,6 +4,12 @@ import { cacheMGet, cacheMSet } from '../utils/cache.ts';
 import * as TiktokRequestRepository from '../repositories/tiktokRequest.repository.ts';
 import { tiktokScrapeQueue, dispatchTiktokScrape } from '../jobs/TiktokScrape.job.ts';
 
+// --- Constants ---
+const CACHE_PREFIX = 'tt:profile:';
+const CACHE_TTL = 86400; // 24 hours
+const BATCH_SIZE = 10;
+const BATCH_DELAY = 1000;
+
 export const processScrapeProfileInfo = async (username: string) => {
     const url = `https://www.tiktok.com/${username}`;
     logger.info(`[TiktokService] Fetching profile for: ${username}`);
@@ -88,10 +94,6 @@ const chunkArray = <T>(array: T[], size: number): T[][] => {
 };
 
 export const getProfilesInfo = async (usernames: string[], requestId?: string) => {
-    const CACHE_PREFIX = 'tt:profile:';
-    const CACHE_TTL = 86400; // 24 hours
-    const BATCH_SIZE = 10;
-    const BATCH_DELAY = 1000;
 
     // 1. Check Cache First
     const cacheKeys = usernames.map(u => `${CACHE_PREFIX}${u.toLowerCase()}`);

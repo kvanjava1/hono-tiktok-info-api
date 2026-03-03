@@ -7,7 +7,8 @@ export class AppError extends Error {
     constructor(
         message: string,
         public statusCode: number = HTTP_STATUS.INTERNAL_SERVER_ERROR,
-        public isOperational: boolean = true
+        public isOperational: boolean = true,
+        public data: any = null
     ) {
         super(message);
         this.name = this.constructor.name;
@@ -16,8 +17,8 @@ export class AppError extends Error {
 }
 
 export class ValidationError extends AppError {
-    constructor(message: string = MESSAGES.VALIDATION_ERROR) {
-        super(message, HTTP_STATUS.BAD_REQUEST);
+    constructor(message: string = MESSAGES.VALIDATION_ERROR, details: any = null) {
+        super(message, HTTP_STATUS.BAD_REQUEST, true, details);
     }
 }
 

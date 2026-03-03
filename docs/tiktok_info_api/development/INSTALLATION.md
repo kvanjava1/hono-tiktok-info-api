@@ -48,13 +48,13 @@ cp .env.example .env.dev
 ### 4. Database Setup
 This app uses SQLite for development. You need to create the tables:
 ```bash
-bun run migrate:sqlite
+bun run migrate:dev:sqlite
 ```
 
 ### 5. Create Initial Client (Seeding)
 To use the API, you need an "Account" (Client ID). Create a default one:
 ```bash
-bun run seed:sqlite
+bun run seed:dev:sqlite
 ```
 *This will create a default client with `clientId: scraper` and `clientSecret: scraper_secret`.*
 

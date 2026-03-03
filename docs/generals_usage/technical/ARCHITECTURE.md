@@ -93,13 +93,27 @@ project-root/
 │       ├── logger.ts               # File logging utility
 │       └── response.ts             # Standard response formatter
 │
-├── seeders/
-│   ├── index.ts                    # Seeder runner
-│   ├── mysql.seeder.ts             # MySQL seed
-│   ├── mongo.seeder.ts             # MongoDB seed
-│   └── sqlite.seeder.ts            # SQLite seed
-│
-├── seed.ts                         # CLI entry for seeding
+├── scripts/
+│   ├── migrations/                 # Database schema versioning
+│   │   ├── mysql/
+│   │   ├── mongo/
+│   │   ├── pg/
+│   │   ├── sqlite/
+│   │   ├── index.ts
+│   │   └── utils.ts
+│   │
+│   ├── seeders/                    # Sample/Initial data population
+│   │   ├── index.ts
+│   │   ├── mysql.seeder.ts
+│   │   ├── mongo.seeder.ts
+│   │   └── sqlite.seeder.ts
+│   │
+│   ├── m2m/                        # M2M client management utilities
+│   ├── stubs/                      # Code generation templates
+│   │
+│   ├── make.ts                     # CLI: Code generation
+│   ├── migrate.ts                  # CLI: Database migration
+│   └── seed.ts                     # CLI: Database seeder
 │
 ├── storages/
 │   ├── logs/
@@ -144,8 +158,8 @@ project-root/
 | **Services** | Business logic, hashing, caching, and Repo orchestration |
 | **Repositories** | High-performance raw DB queries (Native SQL/NoSQL) |
 | **Schemas** | Data shapes, Zod validation rules, and TypeScript types |
-| **Middlewares** | Error handling, rate limiting, logging, security |
-| **Utils** | Logger, response, and cache helpers |
+| **Middlewares** | Error handling, rate limiting, logging, security, request-id, compression |
+| **Utils** | Logger, response, cache, and error model helpers |
 | **Configs** | Environment variables, constants |
 | **Migrations** | Database schema versioning |
 | **Seeders** | Sample/Initial data population |
@@ -153,10 +167,19 @@ project-root/
 
 ---
 
+## 5. Error Handling Architecture
+
+Sistem menggunakan **Unified AppError** (extended dari `Error`) dengan dukungan payload data:
+- **`AppError`**: Base class dengan properti `statusCode` dan `data`.
+- **`ValidationError`**: Secara otomatis menangkap dan memformat error dari Zod menjadi pesan yang lebih ramah pengguna.
+- **Global `errorHandler`**: Menangkap semua error di level top-level, merekam log dengan `requestId`, dan mengembalikan response standar.
+
+---
+
 ## 5. Middleware Pipeline
 
 ```
-Request → CORS → Helmet → Rate Limiter → Logger → Routes → ErrorHandler → Response
+Request → RequestId → Compress → CORS → SecureHeaders → JSON Only → Rate Limiter → Logger → Routes → ErrorHandler → Response
 ```
 
 ---
@@ -181,12 +204,12 @@ Request → CORS → Helmet → Rate Limiter → Logger → Routes → ErrorHand
 └──────┬──────┘
        │ HTTP Request
        ▼
-┌─────────────────────────────────────────┐
-│           Middleware Stack              │
-│  ┌─────┐ ┌───────┐ ┌──────────┐ ┌─────┐│
-│  │CORS│→│Helmet │→│RateLimit │→│Log  ││
-│  └─────┘ └───────┘ └──────────┘ └─────┘│
-└──────────────────┬──────────────────────┘
+┌─────────────────────────────────────────────────────────────────────────────┐
+│                             Middleware Stack                                │
+│  ┌──────────┐ ┌──────────┐ ┌─────┐ ┌───────────────┐ ┌──────────┐ ┌─────┐   │
+│  │RequestId │→│ Compress │→│CORS │→│SecureHeaders │→│RateLimit │→│Log  │   │
+│  └──────────┘ └──────────┘ └─────┘ └───────────────┘ └──────────┘ └─────┘   │
+└──────────────────────────────────────┬──────────────────────────────────────┘
                    ▼
 ┌─────────────────────────────────────────┐
 │              Router                     │

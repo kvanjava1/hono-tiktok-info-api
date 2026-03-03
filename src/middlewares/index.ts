@@ -2,6 +2,8 @@ import type { Hono } from "hono";
 import { cors } from "hono/cors";
 import { secureHeaders } from "hono/secure-headers";
 import { configCors } from "../configs/index.ts";
+import { requestId } from "hono/request-id";
+import { compress } from "hono/compress";
 import { errorHandler } from "./errorHandler.ts";
 import { rateLimiterMiddleware } from "./rateLimiter.ts";
 import { requestLoggerMiddleware } from "./logger.ts";
@@ -13,6 +15,8 @@ export { requestLoggerMiddleware } from "./logger.ts";
 export { jsonOnlyMiddleware } from "./jsonOnly.middleware.ts";
 
 export const setupMiddlewares = (app: Hono) => {
+  app.use("*", requestId());
+  app.use("*", compress());
   app.use(
     "*",
     cors({

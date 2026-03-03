@@ -167,7 +167,33 @@ You can cancel an active callback job if it is still in `pending` or `processing
 
 ---
 
-## ❌ Common Errors
+## ❌ Errors & Validation
+
+Endpoint `/api/tiktok/profiles` menggunakan **Zod Validation** yang ketat. Jika JSON tidak sesuai skema, sistem akan mengembalikan detail kesalahan field.
+
+### Validation Rules
+- **usernames**: Minimal 1 username wajib ada.
+- **request.process.type**: Harus berupa `"instant"` atau `"callback"`.
+- **Logic Conditional**:
+  - Jika `type` adalah `"callback"`, maka `callback.url` **wajib** ada dan valid.
+  - Jika `type` adalah `"instant"`, maka `callback` bersifat opsional.
+
+### Example Validation Error
+```json
+{
+  "status": "error",
+  "message": "Validation failed: request.process: Callback URL is required for type \"callback\"",
+  "data": {
+    "request": {
+      "process": {
+        "callback": { "_errors": ["Callback URL is required for type \"callback\""] }
+      }
+    }
+  }
+}
+```
+
+## ❌ Common Error Codes
 
 | Status | Code | Meaning |
 | :--- | :--- | :--- |

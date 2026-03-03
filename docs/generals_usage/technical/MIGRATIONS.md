@@ -7,7 +7,7 @@ This project uses a flat, powerful migration system inspired by Laravel. It supp
 ## Directory Structure
 
 ```text
-migrations/
+scripts/migrations/
 ├── mysql/files/    # MySQL .ts migration files
 ├── mongo/files/    # MongoDB .ts migration files
 ├── pg/files/       # PostgreSQL .ts migration files
@@ -18,19 +18,17 @@ migrations/
 
 ## Available Commands
 
-The CLI is designed to be smart. You can omit the `up` command as it is the default.
+This project uses explicit environment-based commands for safety.
 
-| Action | Command |
-| :--- | :--- |
-| **Migrate All** | `bun run migrate` |
-| **Migrate MySQL** | `bun run migrate mysql` |
-| **Migrate MongoDB** | `bun run migrate mongo` |
-| **Migrate PostgreSQL** | `bun run migrate pg` |
-| **Migrate SQLite** | `bun run migrate sqlite` |
-| **Run Specific File** | `bun run migrate mysql <file_name>` |
-| **Rollback (All)** | `bun run migrate rollback` |
-| **Rollback (Target)** | `bun run migrate rollback mysql` |
-| **Create New** | `bun run make migration <target> <name>` |
+| Action | Dev Command (`.env.dev`) | Prod Command (`.env.prod`) |
+| :--- | :--- | :--- |
+| **Migrate All** | `bun run migrate:dev` | `bun run migrate:prod` |
+| **Migrate MySQL** | `bun run migrate:dev:mysql` | `bun run migrate:prod:mysql` |
+| **Migrate MongoDB** | `bun run migrate:dev:mongo` | `bun run migrate:prod:mongo` |
+| **Migrate PostgreSQL**| `bun run migrate:dev:pg` | `bun run migrate:prod:pg` |
+| **Migrate SQLite** | `bun run migrate:dev:sqlite` | `bun run migrate:prod:sqlite` |
+| **Rollback** | `bun run migrate:dev:down` | (Not recommended) |
+| **Create New** | `bun run make migration <target> <name>` | N/A |
 
 ---
 

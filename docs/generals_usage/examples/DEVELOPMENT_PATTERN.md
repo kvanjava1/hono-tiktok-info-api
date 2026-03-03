@@ -11,7 +11,7 @@ We will demonstrate how to implement a simple "Products" management feature.
 ### 1. Database Migration
 Create a schema for the new entity. Run `bun run make migration products` to generate a stub.
 
-**File:** `migrations/sqlite/files/20260220_create_products_table.ts`
+**File:** `scripts/migrations/sqlite/files/20260220_create_products_table.ts`
 ```typescript
 import type { Database } from 'bun:sqlite';
 
@@ -38,7 +38,7 @@ export const down = (db: Database) => {
 ### 2. Seeding
 Populate the database with initial/test data.
 
-**File:** `seeders/sqlite/ProductSeeder.ts`
+**File:** `scripts/seeders/sqlite/ProductSeeder.ts`
 ```typescript
 import type { Database } from 'bun:sqlite';
 

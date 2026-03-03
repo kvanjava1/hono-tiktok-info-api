@@ -2,6 +2,13 @@
 
 Welcome! This folder contains the complete documentation for the **TikTok Info API**. To help you find what you need quickly, here is an overview of the directory structure:
 
+### ⚙️ Core Technology Stack
+- **Bun**: `v1.3.9`
+- **Hono**: `v4.6.0`
+- **BullMQ**: `v5.69.3`
+- **IORedis**: `v5.9.3`
+- **Zod**: `v4.3.6`
+
 ---
 
 ## 📂 Directory Map
@@ -21,6 +28,10 @@ Technical details about the data storage.
 Everything you need to get the project running locally.
 - **[INSTALLATION.md](./development/INSTALLATION.md)**: Beginner-friendly setup guide.
 
+### 🌐 [/deployment](./deployment)
+Guides for hosting the application in production environments.
+- **[DEPLOYMENT_GUIDE.md](./deployment/DEPLOYMENT_GUIDE.md)**: Beginner-friendly Linux server deployment and PM2 guide.
+
 ### 🔧 [/tools](./tools)
 Documentation for internal utilities.
 - **[admin](./tools/admin)**: Command-line management tools.
@@ -29,9 +40,9 @@ Documentation for internal utilities.
 ---
 
 ## 🚀 Recommended Reading Order
-1.  **New Developers**: Start with [INSTALLATION.md](./development/INSTALLATION.md).
-2.  **API Users**: Start with [api/client/README.md](./api/client/README.md).
-3.  **Administrators**: Start with [tools/admin/CLIENT_MANAGEMENT.md](./tools/admin/CLIENT_MANAGEMENT.md).
+1.  **New Developers**: Start with [INSTALLATION.md](./development/INSTALLATION.md) and understand the stack.
+2.  **API Users**: Start with [AUTHORIZATION.md](./api/client/AUTHORIZATION.md).
+3.  **DevOps & SysAdmins**: Start with [DEPLOYMENT_GUIDE.md](./deployment/DEPLOYMENT_GUIDE.md) and [CLIENT_MANAGEMENT.md](./tools/admin/CLIENT_MANAGEMENT.md).
 
 ---
 

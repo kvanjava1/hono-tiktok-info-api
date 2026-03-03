@@ -44,20 +44,20 @@ Before you begin, ensure you have the following installed:
 Set up your tables/collections for your enabled databases:
 ```bash
 # Run all enabled migrations
-bun run migrate
+bun run migrate:dev
 
 # Run for a specific target
-bun run migrate pg
+bun run migrate:dev:pg
 ```
 
 ### 2. Seed Data
 Populate your database with initial mockup data:
 ```bash
 # Seed all enabled databases
-bun run seed
+bun run seed:dev
 
 # Seed a specific target/file
-bun run seed pg UserSeeder
+bun run seed:dev:pg
 ```
 
 ---

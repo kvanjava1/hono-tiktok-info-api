@@ -19,32 +19,34 @@ This guide describes how to manage API clients using the enhanced CLI utility su
 ### 1. List All Clients
 Get a quick overview of every client in the system.
 ```bash
-bun run src/utils/m2m/list.ts
+bun run m2m:list:dev
 ```
 
 ### 2. Add New Client
 Register a new service or website for M2M access.
 ```bash
-bun run src/utils/m2m/add.ts "<name>" "<clientId>" "<clientSecret>" [limit] [ips]
+bun run m2m:add:dev -- "<name>" "<clientId>" "<clientSecret>" [limit] [ips]
 ```
+> [!TIP]
+> Use `--` to separate bun arguments from script arguments.
 
 ### 3. Check Client Details
 Lookup existing client configuration and see **Today's** usage percentage.
 ```bash
-bun run src/utils/m2m/check.ts "<name>"
+bun run m2m:check:dev -- "<name>"
 ```
 
 ### 4. View Activity Logs
 Audit the recent request history. Supports filtering and custom limits.
 ```bash
 # View last 20 logs (Default)
-bun run src/utils/m2m/logs.ts
+bun run m2m:logs:dev
 
 # View last 50 logs
-bun run src/utils/m2m/logs.ts 50
+bun run m2m:logs:dev -- 50
 
 # View last 50 logs for a specific client
-bun run src/utils/m2m/logs.ts 50 "my_client_id"
+bun run m2m:logs:dev -- 50 "my_client_id"
 ```
 
 ### 5. Manage Allowed IPs (Add/Remove)
@@ -52,32 +54,35 @@ Precisely control which IPs can access your API.
 
 ```bash
 # Add a single IP
-bun run src/utils/m2m/ip.ts add "<clientId>" "127.0.0.1"
+bun run m2m:ip:dev -- add "<clientId>" "127.0.0.1"
 
 # Remove a single IP
-bun run src/utils/m2m/ip.ts remove "<clientId>" "127.0.0.1"
+bun run m2m:ip:dev -- remove "<clientId>" "127.0.0.1"
 
 # Clear all IPs (Allow any IP)
-bun run src/utils/m2m/ip.ts clear "<clientId>"
+bun run m2m:ip:dev -- clear "<clientId>"
 ```
 
 ### 6. Update Status (Suspend/Activate)
 Instantly block or restore access for a client.
 ```bash
 # Suspend a client
-bun run src/utils/m2m/status.ts "<clientId>" "suspended"
+bun run m2m:status:dev -- "<clientId>" "suspended"
 
 # Activate a client
-bun run src/utils/m2m/status.ts "<clientId>" "active"
+bun run m2m:status:dev -- "<clientId>" "active"
 ```
 
 ### 7. Delete Client
 Permanently remove a client from the system.
 ```bash
-bun run src/utils/m2m/delete.ts "<clientId>" --confirm
+bun run m2m:delete:dev -- "<clientId>" --confirm
 ```
 
 ---
+
+> [!NOTE]
+> All commands also support `:prod` suffix to operate on the production database using `.env.prod`.
 
 ## ⚙️ Configuration Parameters
 
